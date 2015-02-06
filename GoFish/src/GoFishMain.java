@@ -39,6 +39,12 @@ public class GoFishMain {
 	public static void main(String[] args) {
 		ArrayList deck = new ArrayList(52);
 		deck = draw52Cards();
+		
+		ArrayList playerHand = new ArrayList(39);
+		ArrayList cpuHand = new ArrayList(39);
+		
+		dealCards(deck, playerHand, cpuHand);
+		
 		System.out.println(checkDeckDuplicates(deck));
 	}
 	
@@ -105,5 +111,26 @@ public class GoFishMain {
 			default: name = "Card of Destiny"; break;
 		}
 		return name;
+	}
+	
+	/**
+	 * Distributes 7 cards for each player on the start of the game
+	 * @param deck It is where the cards distributed to each players come from
+	 * @param playerHand Receives 7 cards from the deck
+	 * @param cpuHand Receives another 7 cards from the deck
+	 */
+	public static void dealCards(ArrayList deck, ArrayList playerHand, ArrayList cpuHand) {
+		playerHand.clear();
+		cpuHand.clear();
+		// get 7 cards from deck
+		// place each card in playerHand
+		for (int i=0; i<7; i++) {
+			playerHand.add(deck.remove(0));
+		}
+		// get 7 cards from deck
+		// place each cacrd in cpuHand
+		for (int i=0; i<7; i++) {
+			cpuHand.add(deck.remove(0));
+		}
 	}
 }

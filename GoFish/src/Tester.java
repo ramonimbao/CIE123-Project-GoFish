@@ -30,4 +30,19 @@ public class Tester {
 		assertEquals("Ace of Diamonds", GoFishMain.getCardName(39));
 		assertEquals("Card of Destiny", GoFishMain.getCardName(52));
 	}
+	
+	@Test
+	public void testDealCards() {
+		ArrayList deck = new ArrayList(52);
+		ArrayList playerHand = new ArrayList(39);
+		ArrayList cpuHand = new ArrayList(39);
+		
+		for(int i=0; i<5; i++) {
+			deck = GoFishMain.draw52Cards();
+			GoFishMain.dealCards(deck, playerHand, cpuHand);
+			assertEquals(7, playerHand.size());
+			assertEquals(7, cpuHand.size());
+			assertEquals(38, deck.size());
+		}
+	}
 }
