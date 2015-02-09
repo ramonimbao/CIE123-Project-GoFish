@@ -4,11 +4,12 @@ import ec.util.MersenneTwisterFast;
 
 
 public class GoFishMain {
-	/**
-	 * 
-	 */
 	private static MersenneTwisterFast RNG = new MersenneTwisterFast();
 	
+	/**
+	 * Creates an ArrayList of 52 different integers from 0-51
+	 * @return the ArrayList containing the integers 0-51 in a random order
+	 */
 	public static ArrayList draw52Cards() {
 		ArrayList deck = new ArrayList(52);
 		
@@ -22,7 +23,11 @@ public class GoFishMain {
 		//System.out.println(deck.toString());
 		return deck;
 	}
-	
+	/**
+	 * Checks for duplicates inside a deck
+	 * @param deck the ArrayList of the deck of cards
+	 * @return true if there are duplicates, false when there are none
+	 */
 	public static boolean checkDeckDuplicates(ArrayList deck) {
 		boolean hasDuplicates = false;
 		for(int i=0; i<52; i++) {
