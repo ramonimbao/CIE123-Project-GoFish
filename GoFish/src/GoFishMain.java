@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import ec.util.MersenneTwisterFast;
 
 
@@ -50,7 +49,8 @@ public class GoFishMain {
 		
 		dealCards(deck, playerHand, cpuHand);
 		
-		System.out.println(checkDeckDuplicates(deck));
+		displayTitleScreen();
+		
 	}
 	
 	/**
@@ -137,5 +137,31 @@ public class GoFishMain {
 		for (int i=0; i<7; i++) {
 			cpuHand.add(deck.remove(0));
 		}
+	}
+	
+	public static void displayTitleScreen() {
+		System.out.println(
+		  "╔═══════════════════════════════════╗\n"
+		+ "║ ┌───────────────────────────────┐ ║\n"
+		+ "║ │                               │ ║\n"
+		+ "║ │                               │ ║\n"
+		+ "║ │   ╓──╖╓──╖  ╓──╖─╥─╓──╖╥  ╥   │ ║\n"
+		+ "║ │   ║  ╜║  ║  ║  ╜ ║ ║  ╜║  ║   │ ║\n"
+		+ "║ │   ║╓─╖║  ║  ╟──  ║ ╙──╖╟──╢   │ ║\n"
+		+ "║ │   ║╙ ║║  ║  ║    ║ ╓  ║║  ║   │ ║\n"
+		+ "║ │   ╙──╜╙──╜  ╙   ─╨─╙──╜╨  ╨   │ ║\n"
+		+ "║ │       ┌─┐┬┌─   ┐┌─┐┌─┐        │ ║\n"
+		+ "║ │       │  │├─ ─ │┌─┘ ─┤        │ ║\n"
+		+ "║ │       └─┘┴└─   ┴└─┘└─┘        │ ║\n"
+		+ "║ │        →   PROJECT  ←         │ ║\n"
+		+ "║ │                               │ ║\n"
+		+ "║ │     Dawn Christine Corpuz     │ ║\n"
+		+ "║ │      Ramon Miguel Imbao       │ ║\n"
+		+ "║ │                               │ ║\n"
+		+ "║ │                               │ ║\n"
+		+ "║ │                               │ ║\n"
+		+ "║ └───────────────────────────────┘ ║\n"
+		+ "╚═══════════════════════════════════╝\n"
+				);
 	}
 }
