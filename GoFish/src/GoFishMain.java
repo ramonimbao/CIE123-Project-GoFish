@@ -9,6 +9,9 @@ public class GoFishMain {
 	private static ArrayList playerHand = new ArrayList(39);
 	private static ArrayList cpuHand = new ArrayList(39);
 	
+	private static int playerScore = 0;
+	private static int AIScore = 0;
+	
 	private static MersenneTwisterFast RNG = new MersenneTwisterFast();
 	
 	/**
@@ -48,7 +51,7 @@ public class GoFishMain {
 	
 	public static void main(String[] args) {
 		displayTitleScreen();
-		
+		startGame();
 	}
 	
 	/**
@@ -176,5 +179,12 @@ public class GoFishMain {
 		deck = draw52Cards();
 		dealCards(deck, playerHand, cpuHand);
 		
+		System.out.println("Player");
+		System.out.print("Score: "); System.out.println(playerScore);
+		System.out.print("# of cards: "); System.out.println(playerHand.size());
+		System.out.println("Cards on hand:");
+		for(int i = 0; i<playerHand.size(); i++) {
+			System.out.println(getCardName((int)playerHand.get(i)));
+		}
 	}
 }
