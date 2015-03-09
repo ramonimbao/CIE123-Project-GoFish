@@ -145,8 +145,17 @@ public class GoFishMain {
 	
 	public static void evalTurn(){
 		if(playerTurn == 0){
-			playerHand.add(deck.remove(0));
+			// Draw a Card
+			if(deck.size() > 0 && playerHand.size() > 0) {
+				playerHand.add(deck.remove(0));
+			}
+			else if (deck.size() > 0 && playerHand.size() == 0) {
+				for(int i = 0; i < 7; i++) {
+					playerHand.add(deck.remove(0));
+				}
+			}
 			
+			// Display Options
 			System.out.println();
 			System.out.println("Pick a type:");
 			ArrayList options = new ArrayList(13);
@@ -164,13 +173,17 @@ public class GoFishMain {
 				System.out.println("(" + (char)(letter+i) + ") " + options.get(i));
 			}
 			
+			// Accept User Input
 			Scanner s = new Scanner(System.in);
 			int choice = (int)(s.next().charAt(0) - 'a');
 			
+			// Ask Type
 			System.out.print("YOU: Do you have any ");
 			System.out.print(options.get(choice));
 			System.out.println("s?");
 			
+			
+			// Check choice
 			ArrayList cpuPlayerHand = new ArrayList(13);
 			
 			for(int i=0; i<cpuHand.size(); i++){
@@ -196,6 +209,7 @@ public class GoFishMain {
 				playerTurn = 1;
 			}
 			
+			// Check if Player has 4 of a kind
 			int[] cardCount = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 			for (int i = 0; i < playerHand.size(); i++) {
 				switch (playerHand.get(i).type) {
@@ -228,7 +242,8 @@ public class GoFishMain {
 				}
 			}
 		}
-		else{
+		
+		else {
 		
 		}
 	}
