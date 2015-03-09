@@ -1,4 +1,6 @@
+import java.io.IOException;
 import java.util.ArrayList;
+
 import ec.util.MersenneTwisterFast;
 
 
@@ -158,10 +160,20 @@ public class GoFishMain {
 		+ "║ │     Dawn Christine Corpuz     │ ║\n"
 		+ "║ │      Ramon Miguel Imbao       │ ║\n"
 		+ "║ │                               │ ║\n"
-		+ "║ │                               │ ║\n"
+		+ "║ │    Press <ENTER> to start.    │ ║\n"
 		+ "║ │                               │ ║\n"
 		+ "║ └───────────────────────────────┘ ║\n"
 		+ "╚═══════════════════════════════════╝\n"
 				);
+		
+		try {
+			if (System.in.read() != -1) {
+				for(int i=0; i<100; i++) System.out.println();
+				// call StartGame
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
