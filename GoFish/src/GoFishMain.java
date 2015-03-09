@@ -12,6 +12,10 @@ public class GoFishMain {
 	private static int playerScore = 0;
 	private static int AIScore = 0;
 	
+	private static int playerTurn = 0;
+	
+	
+	
 	private static MersenneTwisterFast RNG = new MersenneTwisterFast();
 	
 	/**
@@ -186,5 +190,11 @@ public class GoFishMain {
 		for(int i = 0; i<playerHand.size(); i++) {
 			System.out.println(getCardName((int)playerHand.get(i)));
 		}
+		
+		System.out.println("AI");
+		System.out.print("Score: "); System.out.println(AIScore);
+		System.out.print("# of cards: "); System.out.println(cpuHand.size());
+		
+		
 	}
 }
