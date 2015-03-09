@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 
 import ec.util.MersenneTwisterFast;
 
@@ -15,7 +16,8 @@ public class GoFishMain {
 	
 	private static int playerTurn = 0;
 	
-	
+	private static boolean gameOver = false;
+		
 	
 	private static MersenneTwisterFast RNG = new MersenneTwisterFast();
 	
@@ -61,6 +63,7 @@ public class GoFishMain {
 	public static void main(String[] args) {
 		displayTitleScreen();
 		startGame();
+		while(!gameOver) evalTurn();
 	}
 	
 	/**
@@ -111,7 +114,7 @@ public class GoFishMain {
 		
 		try {
 			if (System.in.read() != -1) {
-				for(int i=0; i<100; i++) System.out.println();
+				clearScreen();
 				// call StartGame
 			}
 		} catch (IOException e) {
@@ -138,5 +141,100 @@ public class GoFishMain {
 		System.out.print("# of cards: "); System.out.println(cpuHand.size());
 		
 		
+	}
+	
+	public static void evalTurn(){
+		if(playerTurn == 0){
+			playerHand.add(deck.remove(0));
+			
+			System.out.println();
+			System.out.println("Pick a type:");
+			ArrayList options = new ArrayList(13);
+			
+			for(int i=0; i<playerHand.size(); i++){
+				String cardType = playerHand.get(i).type;
+				if (!options.contains(cardType)) {
+					options.add(cardType);
+				}
+			}
+			
+			char letter = 'a';
+			
+			for (int i=0; i < options.size(); i++) {
+				System.out.println("(" + (char)(letter+i) + ") " + options.get(i));
+			}
+			
+			Scanner s = new Scanner(System.in);
+			int choice = (int)(s.next().charAt(0) - 'a');
+			
+			System.out.print("YOU: Do you have any ");
+			System.out.print(options.get(choice));
+			System.out.println("s?");
+			
+			ArrayList cpuPlayerHand = new ArrayList(13);
+			
+			for(int i=0; i<cpuHand.size(); i++){
+				String cardType = cpuHand.get(i).type;
+				if (!cpuPlayerHand.contains(cardType)) {
+					cpuPlayerHand.add(cardType);
+				}
+			}
+			
+			if (cpuPlayerHand.contains(options.get(choice))) {
+				System.out.println("CPU: Yes.");
+				for(int i = 0; i<cpuHand.size(); i++) {
+					if (cpuHand.get(i).type == options.get(choice)) {
+						playerHand.add(cpuHand.remove(i));
+						i--;
+					}
+				}
+			}
+			
+			else {
+				System.out.println("CPU: Go fish.");
+				
+				playerTurn = 1;
+			}
+			
+			int[] cardCount = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+			for (int i = 0; i < playerHand.size(); i++) {
+				switch (playerHand.get(i).type) {
+				case "Ace": cardCount[0]++; break;
+				case "Two": cardCount[1]++; break;
+				case "Three": cardCount[2]++; break;
+				case "Four": cardCount[3]++; break;
+				case "Five": cardCount[4]++; break;
+				case "Six": cardCount[5]++; break;
+				case "Seven": cardCount[6]++; break;
+				case "Eight": cardCount[7]++; break;
+				case "Nine": cardCount[8]++; break;
+				case "Ten": cardCount[9]++; break;
+				case "Jack": cardCount[10]++; break;
+				case "Queen": cardCount[11]++; break;
+				case "King": cardCount[12]++; break;
+				}
+			}
+			
+			String[] cardNames = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
+			for (int i = 0; i < 13; i++) {
+				if (cardCount[i] == 4) {
+					for(int j = 0; j < playerHand.size(); j++) {
+						if (playerHand.get(j).type == cardNames[i]) {
+							playerHand.remove(j);
+							j--;
+						}
+					}
+					playerScore++;
+				}
+			}
+		}
+		else{
+		
+		}
+	}
+	
+	private static void clearScreen(){
+		for(int i=0; i<100; i++)
+			System.out.println();
 	}
 }
