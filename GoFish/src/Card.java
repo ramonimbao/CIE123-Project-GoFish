@@ -1,7 +1,7 @@
 
 public class Card {
-	public static String type;
-	public static String suit;
+	public String type;
+	public String suit;
 	
 	public Card(int card){
 		switch (card) {
@@ -60,7 +60,7 @@ public class Card {
 	}
 	}
 	
-	public static String getCardName(){
+	public String getCardName(){
 		return type + " of " + suit;
 	}
 
