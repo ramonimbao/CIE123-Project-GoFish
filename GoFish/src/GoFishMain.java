@@ -63,7 +63,18 @@ public class GoFishMain {
 	public static void main(String[] args) {
 		displayTitleScreen();
 		startGame();
-		while(!gameOver) evalTurn();
+		while(!gameOver) {
+			evalTurn();
+			System.out.println();
+			System.out.println();
+			System.out.println("----------------------------------------");
+			System.out.println();
+			System.out.println();
+			if (playerTurn == 0)
+				gameInfo();
+		}
+		
+		gameOver();
 	}
 	
 	/**
@@ -126,7 +137,13 @@ public class GoFishMain {
 		deck = draw52Cards();
 		
 		dealCards(deck, playerHand, cpuHand);
-		
+		gameInfo();
+	}
+	
+	public static void gameInfo(){
+		System.out.print("Deck: ");
+		System.out.println();
+		System.out.println(deck.size());
 		System.out.println("[PLAYER]");
 		System.out.print("Score: "); System.out.println(playerScore);
 		System.out.print("# of cards: "); System.out.println(playerHand.size());
@@ -140,16 +157,20 @@ public class GoFishMain {
 		System.out.print("Score: "); System.out.println(AIScore);
 		System.out.print("# of cards: "); System.out.println(cpuHand.size());
 		
-		
 	}
 	
 	public static void evalTurn(){
+		if (deck.size() == 0 && (playerHand.size() == 0 || cpuHand.size() == 0))
+			gameOver = true;
+		
+		else if (deck.size() > 0) {
+		
 		if(playerTurn == 0){
 			// Draw a Card
-			if(deck.size() > 0 && playerHand.size() > 0) {
+			if(playerHand.size() > 0) {
 				playerHand.add(deck.remove(0));
 			}
-			else if (deck.size() > 0 && playerHand.size() == 0) {
+			else if (playerHand.size() == 0) {
 				for(int i = 0; i < 7; i++) {
 					playerHand.add(deck.remove(0));
 				}
@@ -176,6 +197,8 @@ public class GoFishMain {
 			// Accept User Input
 			Scanner s = new Scanner(System.in);
 			int choice = (int)(s.next().charAt(0) - 'a');
+			if (choice > options.size() - 1) choice = options.size() - 1;
+			if (choice < 0) choice = 0;
 			
 			// Ask Type
 			System.out.print("YOU: Do you have any ");
@@ -245,11 +268,108 @@ public class GoFishMain {
 		
 		else {
 		
+			// Draw a Card
+			if(cpuHand.size() > 0) {
+				cpuHand.add(deck.remove(0));
+			}
+			else if (cpuHand.size() == 0) {
+				for(int i = 0; i < 7; i++) {
+					cpuHand.add(deck.remove(0));
+				}
+			}
+			
+			//Random Type chosen for AI
+			ArrayList options = new ArrayList(13);
+			for(int i=0; i<cpuHand.size(); i++){
+				String cardType = cpuHand.get(i).type;
+				if (!options.contains(cardType)) {
+					options.add(cardType);
+				}
+			}
+			int choice = RNG.nextInt(options.size());
+			
+			// Ask Type
+			System.out.print("CPU: Do you have any ");
+			System.out.print(options.get(choice));
+			System.out.println("s?");
+			
+			// Check choice
+			ArrayList humanPlayerHand = new ArrayList(13);
+			
+			for(int i=0; i<playerHand.size(); i++){
+				String cardType = playerHand.get(i).type;
+				if (!humanPlayerHand.contains(cardType)) {
+					humanPlayerHand.add(cardType);
+				}
+			}
+			
+			if (humanPlayerHand.contains(options.get(choice))) {
+				System.out.println("YOU: Yes.");
+				for(int i = 0; i<playerHand.size(); i++) {
+					if (playerHand.get(i).type == options.get(choice)) {
+						cpuHand.add(playerHand.remove(i));
+						i--;
+					}
+				}
+			}
+			
+			else {
+				System.out.println("YOU: Go fish.");
+				
+				playerTurn = 0;
+			}
+			
+			// Check if AI has 4 of a kind
+			int[] cardCount = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+			for (int i = 0; i < cpuHand.size(); i++) {
+				switch (cpuHand.get(i).type) {
+				case "Ace": cardCount[0]++; break;
+				case "Two": cardCount[1]++; break;
+				case "Three": cardCount[2]++; break;
+				case "Four": cardCount[3]++; break;
+				case "Five": cardCount[4]++; break;
+				case "Six": cardCount[5]++; break;
+				case "Seven": cardCount[6]++; break;
+				case "Eight": cardCount[7]++; break;
+				case "Nine": cardCount[8]++; break;
+				case "Ten": cardCount[9]++; break;
+				case "Jack": cardCount[10]++; break;
+				case "Queen": cardCount[11]++; break;
+				case "King": cardCount[12]++; break;
+				}
+			}
+			
+			String[] cardNames = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
+			for (int i = 0; i < 13; i++) {
+				if (cardCount[i] == 4) {
+					for(int j = 0; j < cpuHand.size(); j++) {
+						if (cpuHand.get(j).type == cardNames[i]) {
+							cpuHand.remove(j);
+							j--;
+						}
+					}
+					AIScore++;
+				}
+			}
+			
+			}	
 		}
 	}
 	
 	private static void clearScreen(){
 		for(int i=0; i<100; i++)
 			System.out.println();
+	}
+	
+	private static void gameOver(){
+		System.out.println("\n  ╓──╖╓──╖╓╖╓╖╓── ╓──╖ ╥  ╥╓──╓──╖\n"
+						   + "  ║  ╜║  ║║║║║║   ║  ║ ║  ║║  ║  ║\n"
+						   + "  ║╓─╖╟──╢║╙╜║╟─  ║  ║ ║  ║╟─ ╟─┬╜\n"
+						   + "  ║╙ ║║  ║║  ║║   ║  ║ ╚╗╔╝║  ║ │\n"
+						   + "  ╙──╜╨  ╨╨  ╨╙── ╙──╜  ╚╝ ╙──╨ └─\n"
+		);
+		
+		if(playerScore > AIScore) System.out.println("             You Win!");		
+		else System.out.println("             You Lose!");
 	}
 }
