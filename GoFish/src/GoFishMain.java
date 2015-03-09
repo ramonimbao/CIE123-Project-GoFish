@@ -5,6 +5,10 @@ import ec.util.MersenneTwisterFast;
 
 
 public class GoFishMain {
+	private static ArrayList deck = new ArrayList(52);
+	private static ArrayList playerHand = new ArrayList(39);
+	private static ArrayList cpuHand = new ArrayList(39);
+	
 	private static MersenneTwisterFast RNG = new MersenneTwisterFast();
 	
 	/**
@@ -43,14 +47,6 @@ public class GoFishMain {
 	}
 	
 	public static void main(String[] args) {
-		ArrayList deck = new ArrayList(52);
-		deck = draw52Cards();
-		
-		ArrayList playerHand = new ArrayList(39);
-		ArrayList cpuHand = new ArrayList(39);
-		
-		dealCards(deck, playerHand, cpuHand);
-		
 		displayTitleScreen();
 		
 	}
@@ -175,5 +171,10 @@ public class GoFishMain {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public static void startGame() {
+		deck = draw52Cards();
+		dealCards(deck, playerHand, cpuHand);
+		
 	}
 }
