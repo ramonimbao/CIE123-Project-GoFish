@@ -47,11 +47,13 @@ public class GoFishMain {
 	 * @param deck the ArrayList of the deck of cards
 	 * @return true if there are duplicates, false when there are none
 	 */
-	public static boolean checkDeckDuplicates(ArrayList deck) {
+	public static boolean checkDeckDuplicates(ArrayList<Card> deck) {
 		boolean hasDuplicates = false;
 		for(int i=0; i<52; i++) {
 			for (int j=0; j<52; j++) {
-				if (deck.toArray()[i] == deck.toArray()[j] && i != j) {
+				if (deck.get(i).suit == deck.get(j).suit &&
+					deck.get(i).type == deck.get(j).type &&
+					i != j) {
 					hasDuplicates = true;
 				}
 			}
@@ -98,6 +100,9 @@ public class GoFishMain {
 		}
 	}
 	
+	/**
+	 * Displays the title screen. Also handles the input for starting the game.
+	 */
 	public static void displayTitleScreen() {
 		System.out.println(
 		  "╔═══════════════════════════════════╗\n"
@@ -140,6 +145,15 @@ public class GoFishMain {
 		gameInfo();
 	}
 	
+	/**
+	 * Prints out the following info:
+	 * - number of cards on the deck,
+	 * - player score
+	 * - number of cards on player's hand
+	 * - list of cards on player's hand
+	 * - AI score
+	 * - number of cards on AI player's hand
+	 */
 	public static void gameInfo(){
 		System.out.print("Deck: ");
 		System.out.println();
@@ -159,6 +173,9 @@ public class GoFishMain {
 		
 	}
 	
+	/**
+	 * Contains the entire game logic. Calling this function would mean doing an entire turn.
+	 */
 	public static void evalTurn(){
 		if (deck.size() == 0 && (playerHand.size() == 0 || cpuHand.size() == 0))
 			gameOver = true;
@@ -356,11 +373,17 @@ public class GoFishMain {
 		}
 	}
 	
+	/**
+	 * "Clears" the screen by printing a newline 100 times.
+	 */
 	private static void clearScreen(){
 		for(int i=0; i<100; i++)
 			System.out.println();
 	}
 	
+	/**
+	 * Display the game over screen and displays whether the player wins or loses.
+	 */
 	private static void gameOver(){
 		System.out.println("\n  ╓──╖╓──╖╓╖╓╖╓── ╓──╖ ╥  ╥╓──╓──╖\n"
 						   + "  ║  ╜║  ║║║║║║   ║  ║ ║  ║║  ║  ║\n"
