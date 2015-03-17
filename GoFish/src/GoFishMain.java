@@ -212,10 +212,7 @@ public class GoFishMain {
 			}
 			
 			// Accept User Input
-			Scanner s = new Scanner(System.in);
-			int choice = (int)(s.next().charAt(0) - 'a');
-			if (choice > options.size() - 1) choice = options.size() - 1;
-			if (choice < 0) choice = 0;
+			int choice = convertCharToIntWithLimits(getPlayerChoice(options), options);
 			
 			// Ask Type
 			System.out.print("YOU: Do you have any ");
@@ -394,5 +391,21 @@ public class GoFishMain {
 		
 		if(playerScore > AIScore) System.out.println("             You Win!");		
 		else System.out.println("             You Lose!");
+	}
+	
+	public static char getPlayerChoice(ArrayList options) {
+		Scanner s = new Scanner(System.in);
+		char choice = s.next().charAt(0);
+		
+		
+		return choice;
+	}
+	
+	public static int convertCharToIntWithLimits(char input, ArrayList options) {
+		int choice = (int)(input - 'a');
+		if (choice > options.size() - 1) choice = options.size() - 1;
+		if (choice < 0) choice = 0;
+		
+		return choice;
 	}
 }

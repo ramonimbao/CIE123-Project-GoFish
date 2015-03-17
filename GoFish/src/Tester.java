@@ -31,5 +31,17 @@ public class Tester {
 		}
 	}
 	
-	
+	@Test
+	public void testGetPlayerChoice() {
+		ArrayList options = new ArrayList(13);
+		
+		for (int i = 0; i < 10; i++) {
+			System.out.println("Please enter a choice from a-m");
+			char choice = GoFishMain.getPlayerChoice(options);
+			int converted = (int)(choice - 'a');
+			if (converted > options.size() - 1) converted = options.size() - 1;
+			if (converted < 0) converted = 0;
+			assertEquals(converted, GoFishMain.convertCharToIntWithLimits(choice, options));
+		}
+	}
 }
