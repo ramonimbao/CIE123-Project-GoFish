@@ -241,12 +241,13 @@ public class GoFishMain {
 						}
 					}
 				}
-			}
 			
-			else {
-				System.out.println("CPU: Go fish.");
+			
+				else {
+					System.out.println("CPU: Go fish.");
 				
-				playerTurn = 1;
+					playerTurn = 1;
+				}
 			}
 			
 			// Check if Player has 4 of a kind
@@ -332,12 +333,12 @@ public class GoFishMain {
 						}
 					}
 				}
-			}
 			
-			else {
-				System.out.println("YOU: Go fish.");
+				else {
+					System.out.println("YOU: Go fish.");
 				
-				playerTurn = 0;
+					playerTurn = 0;
+				}
 			}
 			
 			// Check if AI has 4 of a kind
