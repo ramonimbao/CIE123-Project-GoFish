@@ -180,62 +180,65 @@ public class GoFishMain {
 		if (deck.size() == 0 && (playerHand.size() == 0 || cpuHand.size() == 0))
 			gameOver = true;
 		
-		else if (deck.size() > 0) {
+		//else if (deck.size() > 0) {
 		
 		if(playerTurn == 0){
 			// Draw a Card
-			if(playerHand.size() > 0) {
-				playerHand.add(deck.remove(0));
-			}
-			else if (playerHand.size() == 0) {
-				for(int i = 0; i < 7; i++) {
+			if (deck.size() > 0) {
+				if(playerHand.size() > 0) {
 					playerHand.add(deck.remove(0));
+				}
+				else if (playerHand.size() == 0) {
+					for(int i = 0; i < 7; i++) {
+						playerHand.add(deck.remove(0));
+					}
 				}
 			}
 			
 			// Display Options
-			System.out.println();
-			System.out.println("Pick a type:");
-			ArrayList options = new ArrayList(13);
-			
-			for(int i=0; i<playerHand.size(); i++){
-				String cardType = playerHand.get(i).type;
-				if (!options.contains(cardType)) {
-					options.add(cardType);
+			if (playerHand.size() > 0) {
+				System.out.println();
+				System.out.println("Pick a type:");
+				ArrayList options = new ArrayList(13);
+				
+				for(int i=0; i<playerHand.size(); i++){
+					String cardType = playerHand.get(i).type;
+					if (!options.contains(cardType)) {
+						options.add(cardType);
+					}
 				}
-			}
 			
-			char letter = 'a';
+				char letter = 'a';
 			
-			for (int i=0; i < options.size(); i++) {
-				System.out.println("(" + (char)(letter+i) + ") " + options.get(i));
-			}
-			
-			// Accept User Input
-			int choice = convertCharToIntWithLimits(getPlayerChoice(options), options);
-			
-			// Ask Type
-			System.out.print("YOU: Do you have any ");
-			System.out.print(options.get(choice));
-			System.out.println("s?");
-			
-			
-			// Check choice
-			ArrayList cpuPlayerHand = new ArrayList(13);
-			
-			for(int i=0; i<cpuHand.size(); i++){
-				String cardType = cpuHand.get(i).type;
-				if (!cpuPlayerHand.contains(cardType)) {
-					cpuPlayerHand.add(cardType);
+				for (int i=0; i < options.size(); i++) {
+					System.out.println("(" + (char)(letter+i) + ") " + options.get(i));
 				}
-			}
 			
-			if (cpuPlayerHand.contains(options.get(choice))) {
-				System.out.println("CPU: Yes.");
-				for(int i = 0; i<cpuHand.size(); i++) {
-					if (cpuHand.get(i).type == options.get(choice)) {
-						playerHand.add(cpuHand.remove(i));
-						i--;
+				// Accept User Input
+				int choice = convertCharToIntWithLimits(getPlayerChoice(options), options);
+			
+				// Ask Type
+				System.out.print("YOU: Do you have any ");
+				System.out.print(options.get(choice));
+				System.out.println("s?");
+			
+				// Check choice
+				ArrayList cpuPlayerHand = new ArrayList(13);
+			
+				for(int i=0; i<cpuHand.size(); i++){
+					String cardType = cpuHand.get(i).type;
+					if (!cpuPlayerHand.contains(cardType)) {
+						cpuPlayerHand.add(cardType);
+					}
+				}
+			
+				if (cpuPlayerHand.contains(options.get(choice))) {
+					System.out.println("CPU: Yes.");
+					for(int i = 0; i<cpuHand.size(); i++) {
+						if (cpuHand.get(i).type == options.get(choice)) {
+							playerHand.add(cpuHand.remove(i));
+							i--;
+						}
 					}
 				}
 			}
@@ -283,46 +286,50 @@ public class GoFishMain {
 		else {
 		
 			// Draw a Card
-			if(cpuHand.size() > 0) {
-				cpuHand.add(deck.remove(0));
-			}
-			else if (cpuHand.size() == 0) {
-				for(int i = 0; i < 7; i++) {
+			if (deck.size() > 0) {
+				if(cpuHand.size() > 0) {
 					cpuHand.add(deck.remove(0));
 				}
-			}
-			
-			//Random Type chosen for AI
-			ArrayList options = new ArrayList(13);
-			for(int i=0; i<cpuHand.size(); i++){
-				String cardType = cpuHand.get(i).type;
-				if (!options.contains(cardType)) {
-					options.add(cardType);
-				}
-			}
-			int choice = RNG.nextInt(options.size());
-			
-			// Ask Type
-			System.out.print("CPU: Do you have any ");
-			System.out.print(options.get(choice));
-			System.out.println("s?");
-			
-			// Check choice
-			ArrayList humanPlayerHand = new ArrayList(13);
-			
-			for(int i=0; i<playerHand.size(); i++){
-				String cardType = playerHand.get(i).type;
-				if (!humanPlayerHand.contains(cardType)) {
-					humanPlayerHand.add(cardType);
+				else if (cpuHand.size() == 0) {
+					for(int i = 0; i < 7; i++) {
+						cpuHand.add(deck.remove(0));
+					}
 				}
 			}
 			
-			if (humanPlayerHand.contains(options.get(choice))) {
-				System.out.println("YOU: Yes.");
-				for(int i = 0; i<playerHand.size(); i++) {
-					if (playerHand.get(i).type == options.get(choice)) {
-						cpuHand.add(playerHand.remove(i));
-						i--;
+			if (cpuHand.size() > 0) {
+				// Random Type chosen for AI
+				ArrayList options = new ArrayList(13);
+				for(int i=0; i<cpuHand.size(); i++){
+					String cardType = cpuHand.get(i).type;
+					if (!options.contains(cardType)) {
+						options.add(cardType);
+					}
+				}
+				int choice = RNG.nextInt(options.size());
+			
+				// Ask Type
+				System.out.print("CPU: Do you have any ");
+				System.out.print(options.get(choice));
+				System.out.println("s?");
+			
+				// Check choice
+				ArrayList humanPlayerHand = new ArrayList(13);
+			
+				for(int i=0; i<playerHand.size(); i++){
+					String cardType = playerHand.get(i).type;
+					if (!humanPlayerHand.contains(cardType)) {
+						humanPlayerHand.add(cardType);
+					}
+				}
+			
+				if (humanPlayerHand.contains(options.get(choice))) {
+					System.out.println("YOU: Yes.");
+					for(int i = 0; i<playerHand.size(); i++) {
+						if (playerHand.get(i).type == options.get(choice)) {
+							cpuHand.add(playerHand.remove(i));
+							i--;
+						}
 					}
 				}
 			}
@@ -366,7 +373,7 @@ public class GoFishMain {
 				}
 			}
 			
-			}	
+			//}	
 		}
 	}
 	
